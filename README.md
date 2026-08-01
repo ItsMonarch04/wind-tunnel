@@ -2,7 +2,7 @@
 
 **A wind tunnel for SaaS pricing & packaging decisions.** Model your buyers as explicit assumptions, design tiers and fences as a screening mechanism, and watch segments self-select — revealing revenue, conversion, and the surplus you're leaving on the table, before you ship a price.
 
-> **Status: planning (v0.0.1).** The build plan is complete ([CONTEXT.md](CONTEXT.md)); application code lands phase by phase. This README stays honest about what runs today: nothing yet.
+> **Status: planning (v0.0.2).** The build plan is complete and review-hardened ([CONTEXT.md](CONTEXT.md)); application code lands phase by phase. This README stays honest about what runs today: nothing yet.
 
 ## The idea
 
@@ -10,21 +10,21 @@ Most SaaS packaging is decided by gut and competitor-copying. But Good/Better/Be
 
 This studio runs entirely on **your assumptions, made explicit**. It is not a billing tool and not an optimizer that needs live revenue data. It's useful before your first customer exists: a think-before-you-ship reasoning layer for the highest-leverage decision most SaaS teams make on vibes.
 
-## What it does (v1 scope)
+## Product target (v1.0 core + v1.1 extensions)
 
 - **Model** — buyer segments with willingness-to-pay *distributions* (not point guesses), a segment × feature value matrix, and provenance tags for every assumption (guess / interview / survey / conjoint / benchmark).
 - **Design** — tiers, feature fences, free tier, add-ons, flat or per-seat pricing — with a built-in linter that flags dominated tiers, fence inversions, free-tier leakage (in dollars), cannibalization, and competitor loss.
 - **Simulate** — closed-form self-selection: every edit instantly re-sorts buyers into tiers. Revenue, conversion, ARPA, capture rate, competitor-loss share; a value waterfall of surplus captured vs. left on the table; per-tier demand curves; A/B two designs against the same buyers.
 - **Analyze — Uncertainty** — Monte Carlo over your assumption uncertainty with a tornado chart that tells you *which assumption to validate first*.
-- **Analyze — Research** — Van Westendorp Price Sensitivity Meter, Choice-Based Conjoint with MNL part-worth estimation (and a price-attribute → WTP bridge back into the value matrix), MaxDiff-lite importance scoring, bundling economics (pure vs. mixed).
-- **Analyze — Positioning** — a competitive price-value map (frontier hull, iso-utility rays) plus each competitor entered as a real alternative in the simulator — so "what % of enterprise would leave for this competitor?" is a number, not a picture.
-- **Communicate** — a pricing-page mock and an exportable Pricing Decision Record: the assumptions, the design, the numbers, and the why — the artifact you defend in the room.
+- **Analyze — Research** — v1.0 includes uncertainty and Van Westendorp; the v1.1 extensions add Choice-Based Conjoint, MaxDiff-lite, and bundling economics.
+- **Analyze — Positioning** — competitors are real simulator alternatives in v1.0; the segment-scoped map (Pareto points and break-even rays) is a v1.1 extension.
+- **Communicate** — v1.0 ships the exportable Pricing Decision Record; the pricing-page mock follows in v1.1.
 
 The economics is the point: the engine is one rigorously tested primitive (utility upper-envelope selection over an offer menu), with every formula unit-tested against closed-form results and a value-conservation identity enforced on every simulation. See [CONTEXT.md](CONTEXT.md) §4 for the math contract.
 
 ## What it is not
 
-No accounts, no server, no telemetry, no data connectors. Fully client-side: your assumptions never leave your browser. Scenarios save locally and share as self-contained URLs.
+No accounts, no server, no telemetry, no data connectors. Fully client-side: your assumptions stay in your browser; compact model/design configurations can share as URLs, while full survey data travels only in an explicit JSON export.
 
 ## Stack
 
