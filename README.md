@@ -1,14 +1,14 @@
-# Product Studio
+# Wind Tunnel
 
 **A wind tunnel for SaaS pricing & packaging decisions.** Model your buyers as explicit assumptions, design tiers and fences as a screening mechanism, and watch segments self-select — revealing revenue, conversion, and the surplus you're leaving on the table, before you ship a price.
 
-> **Status: planning (v0.0.2).** The build plan is complete and review-hardened ([CONTEXT.md](CONTEXT.md)); application code lands phase by phase. This README stays honest about what runs today: nothing yet.
+> **Status: planning (v0.0.3).** The build plan is complete and review-hardened ([CONTEXT.md](CONTEXT.md)); application code lands phase by phase. This README stays honest about what runs today: nothing yet.
 
 ## The idea
 
 Most SaaS packaging is decided by gut and competitor-copying. But Good/Better/Best isn't decoration — it's a *screening mechanism* (second-degree price discrimination): a menu designed so buyers with different willingness-to-pay sort themselves into the right tier. Once you write your assumptions down — who the segments are, what they'd pay, which features they value — the menu's consequences stop being opinions. They can be computed.
 
-This studio runs entirely on **your assumptions, made explicit**. It is not a billing tool and not an optimizer that needs live revenue data. It's useful before your first customer exists: a think-before-you-ship reasoning layer for the highest-leverage decision most SaaS teams make on vibes.
+Wind Tunnel runs entirely on **your assumptions, made explicit**. It is not a billing tool and not an optimizer that needs live revenue data. It's useful before your first customer exists: a think-before-you-ship reasoning layer for the highest-leverage decision most SaaS teams make on vibes.
 
 ## Product target (v1.0 core + v1.1 extensions)
 
