@@ -1,0 +1,52 @@
+{
+  "name": "wind-tunnel",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A client-side SaaS pricing and packaging decision studio.",
+  "scripts": {
+    "dev": "next dev",
+    "build": "npm run privacy && next build && npm run bundle-size",
+    "start": "node scripts/serve-static.mjs",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint .",
+    "format": "prettier --write . --ignore-unknown",
+    "format:check": "prettier --check . --ignore-unknown",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "e2e": "playwright test",
+    "privacy": "node scripts/check-runtime-privacy.mjs",
+    "bundle-size": "node scripts/check-bundle-size.mjs",
+    "spec-coverage": "node scripts/spec-coverage.mjs"
+  },
+  "dependencies": {
+    "next": "16.2.10",
+    "react": "19.2.7",
+    "react-dom": "19.2.7"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "4.12.1",
+    "@playwright/test": "1.61.1",
+    "@tailwindcss/postcss": "4.3.2",
+    "@testing-library/jest-dom": "6.9.1",
+    "@testing-library/react": "16.3.2",
+    "@types/node": "26.1.1",
+    "@types/react": "19.2.17",
+    "@types/react-dom": "19.2.3",
+    "eslint": "9.39.5",
+    "eslint-config-next": "16.2.10",
+    "fast-check": "4.9.0",
+    "jsdom": "29.1.1",
+    "postcss": "8.5.19",
+    "prettier": "3.9.5",
+    "tailwindcss": "4.3.2",
+    "typescript": "5.9.3",
+    "vitest": "4.1.10"
+  },
+  "overrides": {
+    "postcss": "8.5.19"
+  },
+  "engines": {
+    "node": "24.18.0",
+    "npm": "10.0.0"
+  }
+}
