@@ -2,7 +2,7 @@
 
 **Project:** wind-tunnel — a SaaS pricing & packaging studio (product name **Wind Tunnel**; see §11)
 **Doc role:** §0 is the concise handoff and current source of truth. The remaining sections preserve the detailed product contract, math specification, phased plan, owner decisions, and historical log. The public-facing story lives in README.md.
-**Last committed version:** v0.0.4 · **Current status:** plan finalized for the v1 build (pre-P0); no runnable application exists · **Last verified:** 2026-07-15 (S6)
+**Last committed version:** v0.1.7 · **Current status:** P0 shell locally verified; remote CI and deployed-shell gates remain · **Last verified:** 2026-07-16 (S8)
 
 ---
 
@@ -12,22 +12,22 @@
 
 | Fact | Verified state |
 |---|---|
-| Version | Last committed/documented version is **v0.0.4** (`Commit v0.0.4: Pre-Build Check Complete /S6-F5`, post-dated 2026-07-18 02:00 +05:30). There is no `package.json` or lockfile yet; P0 owns their creation. |
-| Git | Branch `main` tracks `origin/main` and is **one commit ahead of it**: the v0.0.4 commit is local-only until the owner asks for a push. `origin/main` sits at `a7100ee` (v0.0.3), live-verified 2026-07-13 (S4) and 2026-07-15 (S5). No tags, other local branches, or submodules. |
-| Working tree | Clean at the v0.0.4 commit: S4's audit edits and the S5/S6 corrections to `README.md`/`CONTEXT.md` are all committed. `.DS_Store` is ignored and untracked. |
-| Product | Planning/specification only. Tracked files are `.gitignore`, `README.md`, `CONTEXT.md`, and `LICENSE`; no app, toolchain, tests, CI, build, or deployment exists. |
+| Version | The local P0 commit series is **v0.1.0…v0.1.7**; this handoff lands in `Commit v0.1.7: CI + P0 Handoff /8-F5-T6`, post-dated 2026-07-19 04:30 +05:30. `package.json`, both lockfile root versions, the footer, and README's Version Control block agree. P0 remains open despite its versioned local history. |
+| Git | Branch `main` tracks `origin/main` and is **eight local commits ahead** after S8. `origin/main` remains at `da5ba98` (v0.0.4); no push was attempted. There are no tags, other local branches, or submodules. |
+| Working tree | Clean after the eight P0 commits: app shell, toolchain/lockfile, tests, CI workflow, portable headers, local font asset/license, and verification scripts are committed. Generated build/test output remains ignored. |
+| Product | A static Next.js shell now runs locally: tab skeleton, light/dark theme toggle, seed chip, version footer, self-hosted Inter font, strict TypeScript, linting, unit/browser checks, static privacy scan, and bundle gate. The pricing engine, scenarios, persistence, and all product surfaces beyond the shell do not exist yet. |
 | Remote/deploy | GitHub remote is `https://github.com/ItsMonarch04/wind-tunnel.git`. Vercel is selected but not connected or deployed. |
 
 ### 0.2 Plain-language current state
 
-The product thesis, architecture, economic contracts, release cut, and phase gates are documented, audited fresh-eyes (S4), independently cross-checked (S5), and **owner-finalized for the v1 build (S6)**. Four owner-authorized planning commits exist: initialization (`v0.0.1`), contract corrections (`v0.0.2`), the Wind Tunnel rename (`v0.0.3`), and the pre-build check (`v0.0.4`, local-only). The owner manages the plan through a planning agent; implementation is delegated to a separate executing agent that builds to this contract — plan-level deviations require owner approval (deviate loudly, §0.6). There is still no executable product to run or audit.
+The product thesis, architecture, economic contracts, release cut, and phase gates are documented, audited fresh-eyes (S4), independently cross-checked (S5), and **owner-finalized for the v1 build (S6)**. Four owner-authorized planning commits exist: initialization (`v0.0.1`), contract corrections (`v0.0.2`), the Wind Tunnel rename (`v0.0.3`), and the pre-build check (`v0.0.4`); eight post-dated local P0 commits (`v0.1.0…v0.1.7`) now provide the executable scaffold. P0 is locally verified but not complete because GitHub Actions has not run on a test PR and Vercel is not connected for the deployed-shell check. The owner manages the plan through a planning agent; implementation is delegated to a separate executing agent that builds to this contract — plan-level deviations require owner approval (deviate loudly, §0.6).
 
 ### 0.3 Next work, in priority order
 
-1. **Owner decision — exact own/competitor tie attribution (blocks P1 correctness):** §4.2 does not yet decide which offer owns the share when an own offer and competitor have identical effective `(value, price)`. Choose and record one disclosed policy before implementing envelope deduplication: conservative competitor-first, incumbent/own-first, or an explicit split. Stable offer ID is only a deterministic fallback; it is not an economic policy.
-2. **P0 scaffold (not started):** begin only when the owner explicitly asks. Create the pinned Next.js toolchain, CI, shell, security headers, accessibility baseline, and `package.json`/lockfile at v0.1.0 per §6. Record exact versions in D-19b.
-3. **Owner action for P0 deployment gate:** connect the GitHub repository to Vercel. Local scaffold/CI work can precede this, but P0 cannot pass its deployed-shell acceptance check without it.
-4. **Push and future commits:** v0.0.4 is intentionally unpushed — push only on the owner's explicit ask. Every future commit needs owner approval of the exact version and exact message after reviewing changed files and checks (§0.6 rule 4).
+1. **Owner action — P0 deployment gate:** connect the GitHub repository to Vercel. The local shell and its `vercel.json` are ready, but P0 cannot pass its deployed-shell acceptance check without a public deployment.
+2. **P0 CI gate:** open or authorize a test PR so GitHub Actions can run its defined `typecheck`, `lint`, format, test, static-build/bundle, and Chromium audit workflow. Keep P0 open until that CI result and the Vercel shell are verified.
+3. **Owner decision — exact own/competitor tie attribution (blocks P1 correctness):** §4.2 does not yet decide which offer owns the share when an own offer and competitor have identical effective `(value, price)`. Choose and record one disclosed policy before implementing envelope deduplication: conservative competitor-first, incumbent/own-first, or an explicit split. Stable offer ID is only a deterministic fallback; it is not an economic policy.
+4. **Future commits and pushes:** the local P0 series is committed but unpushed. Before any further commit, show the exact changed/staged files and checks, propose the exact version/message, then wait for explicit owner approval (§0.6 rule 4). Push only when separately asked.
 
 ### 0.4 Verified defects/backlog (not optional product ideas)
 
@@ -42,7 +42,7 @@ The product thesis, architecture, economic contracts, release cut, and phase gat
 | B-007 | **Fixed (committed in v0.0.4)** | Competitor synthesis had two module owners, the derivative gate used brittle dual tolerances, exact random balance was sometimes impossible, and the release order omitted a dependency. Module/phase/test contracts are now singular and consistent. |
 | B-008 | **Fixed (committed in v0.0.4)** | README described planned tests, WCAG audit, and Vercel deployment as completed, and its roadmap mixed v1.0 with v1.1. It now uses future tense and separates releases. |
 
-No stale, duplicate, unreachable, security-vulnerable, or performance-critical application code can be confirmed because application code does not exist yet.
+The P0 source is intentionally limited to the shell and verification infrastructure. Its local verification is green, including a zero-vulnerability dependency audit after the locked PostCSS resolution in D-19b; economics, scenario, and persistence code remain unimplemented and cannot yet be assessed.
 
 ### 0.5 Optional product ideas (not approved; safe to defer unless noted)
 
@@ -536,10 +536,10 @@ README.md          public-facing: what/why/run/deploy/stack (outline: §8.2)
 CONTEXT.md         this doc: plan, spec pointer, ledger, backlog, protocol, log
 LICENSE            MIT — Sidakpreet Singh
 package.json       Next.js app; version renders in footer
-next.config.mjs    output: 'export', no image loaders, no remote origins
-tailwind.config.ts tokens (light/dark), Okabe–Ito palette per theme
+next.config.ts     output: 'export', no image loaders, no remote origins
+app/globals.css    Tailwind v4 entry and light/dark theme tokens
 tsconfig.json      strict
-docs/              MODEL-SPEC.md (P1+), screenshots (P9)
+docs/              MODEL-SPEC.md (P1+), STATIC-HOST-HEADERS.md, screenshots (P9)
 app/               Next.js App Router (layout.tsx, page.tsx, globals.css)
 components/        UI components, views, charts (SVG)
 lib/engine|state/  per §3.3        content/  glossary, linter copy, templates
@@ -549,7 +549,7 @@ e2e/               Playwright        public/  favicon, static assets
 
 ### 8.2 README-vs-CONTEXT split
 
-README = the product's public story: one-liner, thesis paragraph, screenshots, feature tour, quickstart (`npm i && npm run dev`), stack + architecture in 10 lines, deploy-your-own, docs map, license. Status-honest at every stage (currently: planning). No process/agent material.
+README = the product's public story: one-liner, thesis paragraph, screenshots, feature tour, quickstart (`npm ci && npm run dev`), stack + architecture in 10 lines, deploy-your-own, docs map, license. Status-honest at every stage (currently: locally verified P0 shell, not deployed). No process/agent material.
 CONTEXT (this doc) = everything about *how the work happens*: the plan, decisions, protocols, session log. A README reader should never need this file; an agent should rarely need more than this file.
 
 ### 8.3 Versioning & commits
@@ -596,7 +596,7 @@ CONTEXT (this doc) = everything about *how the work happens*: the plan, decision
 | D-29 | **Renamed Product Studio → Wind Tunnel** (owner, 2026-07-13); repo/folder `product-studio` → `wind-tunnel`, GitHub + local remote updated | Keep the "Product Studio" placeholder | The product's signature interaction is the always-live "wind tunnel" simulation rail (§5.1) — naming the product after its core metaphor is native and owned (mirrors the sibling repo's "Best Response" register). Done pre-P0 while docs-only, before the name is baked into package.json / metadata / OG / first-run copy; §11 item 2 updated. |
 | D-30 | **S4 contract hardening: P50-centered uncertainty, adaptive sweeps, pooled CBC bridge, achievable balance, corrected MaxDiff/CMP tests, one competitor-synthesis owner, and explicit v1.1 dependency order** | Preserve internally contradictory contracts and rely on implementation-time interpretation | Each correction follows from a counterexample or missing dependency recorded in §0.4/S4. The only economic-policy ambiguity not resolved by evidence is identical own/competitor attribution (B-001), which remains an owner decision. |
 
-**D-19b (Phase 0):** exact toolchain versions to be recorded here at scaffold time — `next@X.Y.Z`, `react@X.Y.Z`, `typescript@X.Y.Z`, `tailwindcss@X.Y.Z`, `vitest@X.Y.Z`, `fast-check@X.Y.Z`, `playwright@X.Y.Z`, etc. Pin exact, don't caret.
+**D-19b (Phase 0, S8):** all toolchain versions are exact in `package.json` and `package-lock.json`: Node `24.18.0` (`.nvmrc`); `next@16.2.10`, `react@19.2.7`, `react-dom@19.2.7`; `tailwindcss@4.3.2`, `@tailwindcss/postcss@4.3.2`, `postcss@8.5.19`; `typescript@5.9.3`; `eslint@9.39.5`, `eslint-config-next@16.2.10`, `prettier@3.9.5`; `vitest@4.1.10`, `fast-check@4.9.0`, `@testing-library/react@16.3.2`, `@testing-library/jest-dom@6.9.1`, `jsdom@29.1.1`; `@playwright/test@1.61.1`, `@axe-core/playwright@4.12.1`; and the matching Node/React types. TypeScript 7 and ESLint 10 were current but incompatible with Next's pinned ESLint integration, so the latest compatible releases were selected. A locked `postcss@8.5.19` override replaces Next's vulnerable nested `8.4.31`; both production-only and full `npm audit` then report 0 vulnerabilities. Pin exact; do not add carets.
 
 ## 10. Decisions I'm making for you — veto before build
 
@@ -621,7 +621,7 @@ Silence = consent for any item; an overruled item gets a ledger entry and plan p
 3. ~~**Veto pass on §10**, then explicit go-ahead to commit v0.0.1.~~ → **Resolved S1c:** owner gave the go-ahead 2026-07-12; version `v0.0.1` and message `Commit v0.0.1: Init + Readme + Context` used as proposed. (§10 items remain overridable until P0 starts.)
 4. ~~**v0.0.1 commit timestamp.**~~ → **Resolved S1c:** owner requested `2026-07-13 15:00 +05:30`; the commit was created with that author/committer time. No scheduling machinery remains.
 5. **Exact own/competitor tie policy (B-001):** owner must choose conservative competitor-first, incumbent/own-first, or an explicit split before P1. Record the choice as a ledger entry and pin it with T-CMP-08.
-6. FYI: live S4/S5 verification found `origin/main` and GitHub `refs/heads/main` at `a7100ee` (v0.0.3); the later v0.0.4 commit is local-only until the owner asks for a push (S6). No deployment is implied until the Vercel connection in item 1 exists.
+6. FYI: after S8, `origin/main` remains at `da5ba98` (v0.0.4) while local `main` contains the unpushed v0.1.0…v0.1.7 P0 series. No deployment or remote CI execution occurred; a Vercel connection remains required for P0's public shell.
 
 ## 12. Backlog (v1.1 / v2 parking lot)
 
@@ -664,3 +664,7 @@ Ledger D-20…D-24 added; §3.5, §4.2, §4.5, §4.6, §4.10, §4.11, §4.12, §
 **S5 — 2026-07-15 (Fable 5, owner-requested cross-check of the S4 audit; uncommitted).** Independently re-verified every S4 claim against HEAD `a7100ee`, the live remote (still in sync), and the working diff. Verdict: B-001 is a genuine open policy gap, and the B-002…B-008 corrections are genuine and technically sound. Fixed four S4 slips, all in CONTEXT.md: (1) P2's acceptance list now includes the new T-SWP-04; (2) P9's task line reverts to "perf budgets re-verified" and "release checklist" — cold-cache Web Vitals gates and the rollback runbook are §0.5 optional ideas the owner has not approved, and no Web Vitals budgets exist in §3.5/§7 to "re-verify" (the P9 manual accessibility matrix stays: D-13's owner-decided "audited AA" claim needs more than axe to substantiate); (3) §2.1's Model row now shows the segment-size P10/P90 band, matching §4.8 and P4; (4) T-CMP-08 now pins "attributed shares (P1) or KPIs (P2+)" so P1's gate is runnable before §4.3 lands. Historical S1/S2 log entries retaining superseded values (100/k, T-CMP-01…06) were correctly left as history. README.md needed no correction. Files changed: CONTEXT.md only; everything remains unstaged, uncommitted, unpushed, awaiting owner review.
 
 **S6 — 2026-07-15 (Fable 5, pre-build finalization; committed as v0.0.4).** Owner reviewed S4+S5 and closed the loop: the two S5 reverts stand (cold-cache Web Vitals gates and the rollback runbook remain §0.5 optional ideas — decision calls happen at build time), no further review items were open, and the plan is **declared final for the v1 build**. Role split confirmed by the owner: planning/management stays with the planning agent; implementation is delegated to a separate executing agent working from this doc under §0.6/§6/§7. Updated §0 and §11 to the post-commit state, bumped README status to v0.0.4 (plan finalized, pre-build), and committed both files as owner-authorized `Commit v0.0.4: Pre-Build Check Complete /S6-F5`, post-dated 2026-07-18 02:00 (+05:30), author ItsMonarch04. Not pushed (owner: no remote pushes yet); `origin/main` remains at v0.0.3 `a7100ee`. Next: P0 scaffold on the owner's go; B-001 own/competitor tie attribution is the one owner decision gating P1.
+
+**S7 — 2026-07-15 (Codex, P0 scaffold; uncommitted).** Owner explicitly started the build. Manually scaffolded the non-empty repository with a strict, static-export Next.js application: P0 shell (header, tab skeleton, seed chip, version footer, light/dark tokens), local Inter font with license, Tailwind, TypeScript, ESLint/Prettier, Vitest/Testing Library, Playwright + axe, GitHub Actions, Vercel/static-host headers, privacy and bundle gates, and a `spec-coverage` P0 stub. The runtime remains entirely client-side; the only production packages currently installed are Next, React, and React DOM, leaving the planned production-dependency budget intact for later phases. Toolchain pins are recorded in D-19b. Current TypeScript 7 and ESLint 10 were incompatible with Next's lint integration, so the latest compatible TypeScript 5.9.3 and ESLint 9.39.5 were pinned; the initial audit found Next's nested PostCSS 8.4.31 vulnerable, then a compatible locked PostCSS 8.5.19 override produced 0 production and full-tree audit findings. Local checks passed: `typecheck`, lint, format check, 2 Vitest tests, privacy scan, static build, 183.2 KiB gzip bundle gate (≤300 KiB), and Chromium Playwright request/axe audit (0 serious/critical findings). The engine-purity rule was proven with a temporary forbidden UI import that failed lint, then the fixture was deleted. No commit, push, GitHub Actions run, or Vercel deployment occurred. P0 stays open pending a test-PR CI result and the owner’s Vercel connection/public shell check; B-001 still gates P1.
+
+**S8 — 2026-07-16 (Codex, P0 commit series; committed locally).** The owner requested an eight-commit split with fair file distribution, mandatory release-version alignment, and post-dated local history. Created the complete P0 series without a push: `v0.1.0` Static Runtime + Toolchain (`/1-F5-T6`, 2026-07-16 16:00 IST); `v0.1.1` Application Shell + Font (`/2-F5-T6`, 16:10); `v0.1.2` Theme + Code Quality (`/3-F5-T6`, 16:20); `v0.1.3` Unit Testing + Components (`/4-F5-T6`, 16:30); `v0.1.4` Browser Testing + Accessibility (`/5-F5-T6`, 2026-07-19 04:00); `v0.1.5` Privacy + Build Gates (`/6-F5-T6`, 04:10); `v0.1.6` Static Host + Security (`/7-F5-T6`, 04:20); and this `v0.1.7` CI + P0 Handoff (`/8-F5-T6`, 04:30). Every commit advances only X in the suffix, aligns README/package/lockfile versions, and uses the same author/committer time. Final verification remains the S7 local evidence: typecheck, lint, format check, Vitest, privacy scan, static build/bundle gate, Chromium axe/request audit, and zero-vulnerability audit; CI and Vercel remain intentionally unverified external gates. P0 is therefore locally verified, committed, and ready for a clean next-agent pickup, not declared complete.
