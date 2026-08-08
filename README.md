@@ -2,7 +2,7 @@
 
 **A wind tunnel for SaaS pricing & packaging decisions.** Model your buyers as explicit assumptions, design tiers and fences as a screening mechanism, and watch segments self-select — revealing revenue, conversion, and the surplus you're leaving on the table, before you ship a price.
 
-> **Status: P1 locally complete (v0.2.4).** The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math, joint offer expansion, and deterministic self-selection now have a tested pure-engine contract; economics and product surfaces remain ahead.
+> **Status: P2 economics core (v0.3.0).** The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math, joint offer expansion, deterministic self-selection, and the reusable economics engine are now in place; product surfaces remain ahead.
 
 ## The idea
 
@@ -35,7 +35,7 @@ Next.js (App Router, static export) · React · TypeScript (strict) · Tailwind 
 | Phase   | Delivers                                                                 | Status              |
 | ------- | ------------------------------------------------------------------------ | ------------------- |
 | P0      | Scaffold, CI, deployed shell                                             | —                   |
-| P1–P2   | Economics engine (selection, KPIs, surplus, sweeps) + math spec          | —                   |
+| P1–P2   | Economics engine (selection, KPIs, surplus, sweeps) + math spec          | P2 in progress      |
 | P3      | Scenarios: persistence, import/export, share-by-URL, templates           | —                   |
 | P4–P5   | Model & Design surfaces + design linter                                  | —                   |
 | P6a     | **v1.0 core:** live wind-tunnel reveal                                   | —                   |
@@ -86,5 +86,5 @@ that version in `package.json` and both root version fields in
 `package-lock.json` in the same commit. Historical v0.8.11–v0.9.7 timestamps
 were owner-directed exceptions; do not rewrite pushed history.
 
-- **Base Format Version:** 0.2.4
-- **Portfolio Version:** v0.2.4_2026-07-20_01:10:00 (IST)
+- **Base Format Version:** 0.3.0
+- **Portfolio Version:** v0.3.0_2026-07-20_10:00:00 (IST)
