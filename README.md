@@ -2,7 +2,7 @@
 
 **A wind tunnel for SaaS pricing & packaging decisions.** Model your buyers as explicit assumptions, design tiers and fences as a screening mechanism, and watch segments self-select — revealing revenue, conversion, and the surplus you're leaving on the table, before you ship a price.
 
-> **Status: P3 fixtures + validation in progress (v0.4.3).** The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math and economics now have a tested pure-engine contract; scenario persistence, sharing, undo, and all three archetype fixtures now have validation coverage, while the user-facing sharing controls and product surfaces remain ahead.
+> **Status: P3 scenario-aware shell in progress (v0.4.4).** The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math and economics now have a tested pure-engine contract; scenarios now restore and autosave in the shell, and theme/seed settings live in scenario state, while the user-facing sharing controls and product surfaces remain ahead.
 
 ## The idea
 
@@ -32,18 +32,18 @@ Next.js (App Router, static export) · React · TypeScript (strict) · Tailwind 
 
 ## Roadmap
 
-| Phase   | Delivers                                                                 | Status              |
-| ------- | ------------------------------------------------------------------------ | ------------------- |
-| P0      | Scaffold, CI, deployed shell                                             | —                   |
-| P1–P2   | Economics engine (selection, KPIs, surplus, sweeps) + math spec          | P2 locally complete |
-| P3      | Scenarios: persistence, import/export, share-by-URL, templates           | P3 validation        |
-| P4–P5   | Model & Design surfaces + design linter                                  | —                   |
-| P6a     | **v1.0 core:** live wind-tunnel reveal                                   | —                   |
-| P7a–P7b | **v1.0 core:** Monte Carlo + tornado and Van Westendorp                  | —                   |
-| P8      | **v1.0 core:** Pricing Decision Record export                            | —                   |
-| P9      | **v1.0 core:** hardening, accessibility & performance audit → **v1.0.0** | —                   |
-| P6b/P8b | **v1.1 extensions:** mechanism + A/B and pricing-page mock               | Deferred until v1.0 |
-| P7c–P7e | **v1.1 extensions:** bundling, CBC + MaxDiff, competitive positioning    | Deferred until v1.0 |
+| Phase   | Delivers                                                                 | Status               |
+| ------- | ------------------------------------------------------------------------ | -------------------- |
+| P0      | Scaffold, CI, deployed shell                                             | —                    |
+| P1–P2   | Economics engine (selection, KPIs, surplus, sweeps) + math spec          | P2 locally complete  |
+| P3      | Scenarios: persistence, import/export, share-by-URL, templates           | P3 shell integration |
+| P4–P5   | Model & Design surfaces + design linter                                  | —                    |
+| P6a     | **v1.0 core:** live wind-tunnel reveal                                   | —                    |
+| P7a–P7b | **v1.0 core:** Monte Carlo + tornado and Van Westendorp                  | —                    |
+| P8      | **v1.0 core:** Pricing Decision Record export                            | —                    |
+| P9      | **v1.0 core:** hardening, accessibility & performance audit → **v1.0.0** | —                    |
+| P6b/P8b | **v1.1 extensions:** mechanism + A/B and pricing-page mock               | Deferred until v1.0  |
+| P7c–P7e | **v1.1 extensions:** bundling, CBC + MaxDiff, competitive positioning    | Deferred until v1.0  |
 
 ## Project docs
 
@@ -86,5 +86,5 @@ that version in `package.json` and both root version fields in
 `package-lock.json` in the same commit. Historical v0.8.11–v0.9.7 timestamps
 were owner-directed exceptions; do not rewrite pushed history.
 
-- **Base Format Version:** 0.4.3
-- **Portfolio Version:** v0.4.3_2026-07-21_02:15:00 (IST)
+- **Base Format Version:** 0.4.4
+- **Portfolio Version:** v0.4.4_2026-07-21_02:30:00 (IST)
