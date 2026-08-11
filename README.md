@@ -2,7 +2,7 @@
 
 **A wind tunnel for SaaS pricing & packaging decisions.** Model your buyers as explicit assumptions, design tiers and fences as a screening mechanism, and watch segments self-select — revealing revenue, conversion, and the surplus you're leaving on the table, before you ship a price.
 
-> **Status: P5 Design workbench in progress (v0.6.3).** The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math and economics have a tested pure-engine contract, scenarios persist locally and share safely, and the Design workbench now edits menus with immediate deterministic feedback.
+> **Status: P5 locally complete (latest committed version v0.6.4).** The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math and economics have a tested pure-engine contract, scenarios persist locally and share safely, and the Model and Design workbenches now edit buyer assumptions and packaging menus with immediate deterministic feedback.
 
 ## The idea
 
@@ -13,7 +13,7 @@ Wind Tunnel runs entirely on **your assumptions, made explicit**. It is not a bi
 ## Product target (v1.0 core + v1.1 extensions)
 
 - **Model** — now available: buyer segments with P50-centred size and WTP bands, within-segment buyer spread, a keyboard-navigable segment × feature value matrix, provenance tags, and immediate engine-backed KPIs. The three template scenarios provide a practical first run.
-- **Design** — now available: editable tiers, feature fences, free tier, add-ons, flat or per-seat pricing, multiple design alternatives, and decision-useful deterministic findings. The final P5 browser audit follows in the next commit.
+- **Design** — now available: editable tiers, feature fences, free tier, add-ons, flat or per-seat pricing, and multiple design alternatives. The built-in linter flags dominated tiers, fence inversions, free-tier leakage (in dollars), cannibalization, competitor loss, and directional behavioral considerations without inventing numeric effects.
 - **Simulate** — v1.0 uses closed-form self-selection so every edit instantly re-sorts buyers into tiers, with revenue, conversion, ARPA, capture rate, a value waterfall, and per-tier demand curves. The mechanism diagram, A/B comparison, and user-facing competitor-loss share follow in v1.1.
 - **Analyze — Uncertainty** — Monte Carlo over your assumption uncertainty with a tornado chart that tells you _which assumption to validate first_.
 - **Analyze — Research** — v1.0 includes uncertainty and Van Westendorp; the v1.1 extensions add Choice-Based Conjoint, MaxDiff-lite, and bundling economics.
@@ -38,7 +38,7 @@ Next.js (App Router, static export) · React · TypeScript (strict) · Tailwind 
 | P1–P2   | Economics engine (selection, KPIs, surplus, sweeps) + math spec          | P2 locally complete |
 | P3      | Scenarios: persistence, import/export, share-by-URL, templates           | P3 locally complete |
 | P4      | Model surface: segments, bands, value matrix, templates                  | P4 locally complete |
-| P5      | Design surface + design linter                                           | Workbench audit     |
+| P5      | Design surface + design linter                                           | Locally complete    |
 | P6a     | **v1.0 core:** live wind-tunnel reveal                                   | —                   |
 | P7a–P7b | **v1.0 core:** Monte Carlo + tornado and Van Westendorp                  | —                   |
 | P8      | **v1.0 core:** Pricing Decision Record export                            | —                   |
@@ -87,5 +87,5 @@ that version in `package.json` and both root version fields in
 `package-lock.json` in the same commit. Historical v0.8.11–v0.9.7 timestamps
 were owner-directed exceptions; do not rewrite pushed history.
 
-- **Base Format Version:** 0.6.3
-- **Portfolio Version:** v0.6.3_2026-07-23_18:45:00 (IST)
+- **Base Format Version:** 0.6.4
+- **Portfolio Version:** v0.6.4_2026-07-23_19:00:00 (IST)
