@@ -2,44 +2,43 @@
 
 import { useState } from "react";
 
+import { BundlingSurface } from "./bundling-surface";
 import { handleHorizontalTabKey } from "./tab-keyboard";
-import { ResearchSurface } from "./research-surface";
-import { UncertaintySurface } from "./uncertainty-surface";
+import { VanWestendorpSurface } from "./van-westendorp-surface";
 
-type AnalyzeView = "uncertainty" | "research";
-const analyzeViews = ["uncertainty", "research"] as const;
+type ResearchView = "psm" | "bundling";
+const researchViews = ["psm", "bundling"] as const;
 
-export function AnalyzeSurface() {
-  const [view, setView] = useState<AnalyzeView>("uncertainty");
-
+export function ResearchSurface() {
+  const [view, setView] = useState<ResearchView>("psm");
   return (
     <section className="flex min-h-0 w-full flex-1 flex-col">
-      <nav aria-label="Analyze workbenches" className="border-b border-line px-6 pt-5 sm:px-10">
-        <div className="flex gap-2" role="tablist">
+      <nav aria-label="Research methods" className="border-b border-line px-6 pt-4 sm:px-10">
+        <div className="flex gap-2 overflow-x-auto" role="tablist">
           {(
             [
-              ["uncertainty", "Uncertainty"],
-              ["research", "Research"],
+              ["psm", "Van Westendorp"],
+              ["bundling", "Bundling"],
             ] as const
           ).map(([id, label]) => {
             const selected = view === id;
             return (
               <button
-                aria-controls="analyze-view"
+                aria-controls="research-view"
                 aria-selected={selected}
-                className={`rounded-t-lg px-4 py-2 text-sm font-semibold ${
+                className={`min-w-max rounded-t-lg px-4 py-2 text-sm font-semibold ${
                   selected ? "bg-accent-soft text-accent-strong" : "text-muted hover:text-ink"
                 }`}
-                id={`analyze-${id}-tab`}
+                id={`research-${id}-tab`}
                 key={id}
                 onClick={() => setView(id)}
                 onKeyDown={(event) =>
                   handleHorizontalTabKey(
                     event,
-                    analyzeViews,
+                    researchViews,
                     view,
                     setView,
-                    (candidate) => `analyze-${candidate}-tab`,
+                    (candidate) => `research-${candidate}-tab`,
                   )
                 }
                 role="tab"
@@ -53,12 +52,12 @@ export function AnalyzeSurface() {
         </div>
       </nav>
       <div
-        aria-labelledby={`analyze-${view}-tab`}
+        aria-labelledby={`research-${view}-tab`}
         className="flex min-h-0 flex-1"
-        id="analyze-view"
+        id="research-view"
         role="tabpanel"
       >
-        {view === "uncertainty" ? <UncertaintySurface /> : <ResearchSurface />}
+        {view === "psm" ? <VanWestendorpSurface /> : <BundlingSurface />}
       </div>
     </section>
   );
