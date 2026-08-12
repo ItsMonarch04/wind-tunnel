@@ -2,7 +2,7 @@
 
 **A wind tunnel for SaaS pricing & packaging decisions.** Model your buyers as explicit assumptions, design tiers and fences as a screening mechanism, and watch segments self-select — revealing revenue, conversion, and the surplus you're leaving on the table, before you ship a price.
 
-> **Status: P7a in progress (latest committed version v0.8.1).** The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math and economics have a tested pure-engine contract, scenarios persist locally and share safely, and the Model, Design, and live Simulate workbenches make buyer assumptions and packaging consequences inspectable.
+> **Status: P7a in progress (latest committed version v0.8.2).** The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math and economics have a tested pure-engine contract, scenarios persist locally and share safely, and the Model, Design, and live Simulate workbenches make buyer assumptions and packaging consequences inspectable.
 
 ## The idea
 
@@ -87,5 +87,5 @@ that version in `package.json` and both root version fields in
 `package-lock.json` in the same commit. Historical v0.8.11–v0.9.7 timestamps
 were owner-directed exceptions; do not rewrite pushed history.
 
-- **Base Format Version:** 0.8.1
-- **Portfolio Version:** v0.8.1_2026-07-24_12:15:00 (IST)
+- **Base Format Version:** 0.8.2
+- **Portfolio Version:** v0.8.2_2026-07-24_12:30:00 (IST)
