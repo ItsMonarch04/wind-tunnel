@@ -6,12 +6,15 @@ import type { ConjointEstimate } from "@/lib/engine/conjoint";
 import { generateConjointDesign } from "@/lib/engine/conjoint";
 import {
   applyConjointBridge,
+  buildSyntheticConjointStudy,
   CONJOINT_DEMO_CSV,
   conjointCsv,
   estimateConjointRecord,
   makeConjointStudy,
   parseConjointCsv,
   scenarioWithConjointStudy,
+  SYNTHETIC_CONJOINT_ATTRIBUTES,
+  SYNTHETIC_CONJOINT_PRICE_LEVELS,
   type ConjointBridgeMapping,
 } from "@/lib/state/conjoint";
 import { formatRecordMoney, formatRecordPercent } from "@/lib/state/decision-record";
@@ -128,7 +131,10 @@ export function ConjointSurface() {
   const [csv, setCsv] = useState(() => (record ? conjointCsv(record.observations) : ""));
   const [csvErrors, setCsvErrors] = useState<readonly { line: number; message: string }[]>([]);
 
-  const estimate = useMemo(() => (record ? estimateConjointRecord(record) : undefined), [record]);
+  const estimate = useMemo(
+    () => (record && record.observations.length > 0 ? estimateConjointRecord(record) : undefined),
+    [record],
+  );
 
   const [segmentId, setSegmentId] = useState(() => scenario.model.segments[0]?.id ?? "");
   const [mapping, setMapping] = useState<
@@ -167,6 +173,26 @@ export function ConjointSurface() {
     } catch (error) {
       setDesignError(error instanceof Error ? error.message : "Design generation failed.");
     }
+  };
+
+  const loadSyntheticStudy = () => {
+    setDesignError(undefined);
+    setCsvErrors([]);
+    setMessage(null);
+    const study = buildSyntheticConjointStudy();
+    setDrafts(
+      SYNTHETIC_CONJOINT_ATTRIBUTES.map((attribute) => ({
+        id: attribute.id,
+        name: attribute.name,
+        levels: attribute.levels.join(", "),
+      })),
+    );
+    setPriceRaw(SYNTHETIC_CONJOINT_PRICE_LEVELS.join(", "));
+    setTaskCount(study.tasks.length);
+    setAlternatives(study.tasks[0]?.alternatives.length ?? 3);
+    setIncludeNone(true);
+    setCsv(conjointCsv(study.observations));
+    updateScenario((current) => scenarioWithConjointStudy(current, study));
   };
 
   const savePastedCsv = () => {
@@ -391,6 +417,9 @@ export function ConjointSurface() {
           <div className="mt-4 flex flex-wrap gap-3">
             <button className={buttonPrimary} onClick={buildDesign} type="button">
               Generate task design
+            </button>
+            <button className={buttonSecondary} onClick={loadSyntheticStudy} type="button">
+              Load synthetic study
             </button>
             {record ? (
               <button
