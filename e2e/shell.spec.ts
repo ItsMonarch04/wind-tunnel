@@ -12,11 +12,23 @@ const baseUrl = "http://127.0.0.1:4173";
  * weakening it.
  */
 async function waitForTransitionsToSettle(page: import("@playwright/test").Page) {
-  await page.evaluate(() =>
-    Promise.all(
-      document.getAnimations().map((animation) => animation.finished.catch(() => undefined)),
-    ),
-  );
+  // Poll rather than await once: a transition triggered by the click that precedes this
+  // call may not have registered yet, and an empty getAnimations() would resolve early.
+  await expect
+    .poll(
+      () =>
+        page.evaluate(async () => {
+          const frame = () => new Promise((resolve) => requestAnimationFrame(() => resolve(null)));
+          await frame();
+          await Promise.all(
+            document.getAnimations().map((animation) => animation.finished.catch(() => undefined)),
+          );
+          await frame();
+          return document.getAnimations().length;
+        }),
+      { timeout: 5000 },
+    )
+    .toBe(0);
 }
 
 async function expectNoSeriousAxeViolations(page: import("@playwright/test").Page) {
@@ -406,6 +418,86 @@ test("the conjoint bridge stays gated when the study cannot identify a price eff
   await expect(page.getByTestId("conjoint-bridge-disabled")).toBeVisible();
   await expect(page.getByRole("button", { name: "Apply pooled part-worths" })).toBeDisabled();
   await expectNoSeriousAxeViolations(page);
+});
+
+// The following four flows are the automated evidence cited by docs/ACCESSIBILITY-AUDIT.md.
+test("the skip link stays off-canvas until focused, then reveals and targets the workbench", async ({
+  page,
+  browserName,
+}) => {
+  await page.goto("/");
+  const skip = page.getByRole("link", { name: "Skip to active workbench" });
+
+  // Off-canvas until focused.
+  const hidden = await skip.boundingBox();
+  expect(hidden?.y ?? 0).toBeLessThan(0);
+
+  // WebKit keeps links out of the sequential tab order unless macOS full keyboard access
+  // is on, so the "first tab stop" claim is asserted where links are tabbable by default.
+  if (browserName !== "webkit") {
+    await page.keyboard.press("Tab");
+    await expect(skip).toBeFocused();
+  } else {
+    await skip.focus();
+  }
+
+  const shown = await skip.boundingBox();
+  expect(shown?.y ?? -1).toBeGreaterThanOrEqual(0);
+
+  await expect(skip).toHaveAttribute("href", "#workbench-panel");
+  await skip.press("Enter");
+  await expect(page.locator("#workbench-panel")).toBeVisible();
+  await expectNoSeriousAxeViolations(page);
+});
+
+test("frequently used checkboxes meet a 24 x 24 CSS pixel pointer target", async ({ page }) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Use this template" }).first().click();
+  await page.getByRole("tab", { name: "Design", exact: true }).click();
+
+  const checkboxes = page.getByRole("checkbox");
+  const count = await checkboxes.count();
+  expect(count).toBeGreaterThan(0);
+  for (let index = 0; index < count; index += 1) {
+    const box = await checkboxes.nth(index).boundingBox();
+    expect(box, `checkbox ${index} has no box`).not.toBeNull();
+    expect(box!.width).toBeGreaterThanOrEqual(24);
+    expect(box!.height).toBeGreaterThanOrEqual(24);
+  }
+});
+
+test("the shell reflows to 320 CSS pixels without page-level horizontal scrolling", async ({
+  page,
+}) => {
+  await page.setViewportSize({ width: 320, height: 800 });
+  await page.goto("/");
+  await page.getByRole("button", { name: "Use this template" }).first().click();
+
+  for (const tab of ["Model", "Design", "Simulate", "Analyze", "Share"]) {
+    await page.getByRole("tab", { name: tab, exact: true }).click();
+    await waitForTransitionsToSettle(page);
+    const overflow = await page.evaluate(() => {
+      const root = document.scrollingElement ?? document.documentElement;
+      return root.scrollWidth - root.clientWidth;
+    });
+    expect(overflow, `${tab} overflows horizontally at 320px`).toBeLessThanOrEqual(1);
+  }
+  await expectNoSeriousAxeViolations(page);
+});
+
+test("print media keeps the decision record and drops the non-document controls", async ({
+  page,
+}) => {
+  await page.goto("/");
+  await page.getByRole("button", { name: "Use this template" }).first().click();
+  await page.getByRole("tab", { name: "Share" }).click();
+  await page.getByRole("button", { name: "Generate current record" }).click();
+  await expect(page.getByTestId("decision-record-document")).toBeVisible();
+
+  await page.emulateMedia({ media: "print" });
+  await expect(page.getByTestId("decision-record-document")).toBeVisible();
+  await expect(page.locator(".no-print").first()).toBeHidden();
+  await page.emulateMedia({ media: null });
 });
 
 test("the MaxDiff demo study scores items into normalized importance", async ({ page }) => {
