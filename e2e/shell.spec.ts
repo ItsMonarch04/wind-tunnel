@@ -3,7 +3,24 @@ import { expect, test } from "@playwright/test";
 
 const baseUrl = "http://127.0.0.1:4173";
 
+/**
+ * Theme switches run a colour transition, so `--ink` updates on the root before the
+ * painted colours catch up. axe sampling mid-fade can pair a pre-switch foreground with
+ * a post-switch background and report a contrast failure that no user ever sees (WebKit
+ * reproduces this reliably; Chromium happens to sample a self-consistent pair). Waiting
+ * for in-flight transitions keeps the audit deterministic across engines without
+ * weakening it.
+ */
+async function waitForTransitionsToSettle(page: import("@playwright/test").Page) {
+  await page.evaluate(() =>
+    Promise.all(
+      document.getAnimations().map((animation) => animation.finished.catch(() => undefined)),
+    ),
+  );
+}
+
 async function expectNoSeriousAxeViolations(page: import("@playwright/test").Page) {
+  await waitForTransitionsToSettle(page);
   const accessibility = await new AxeBuilder({ page }).analyze();
   const seriousOrCritical = accessibility.violations.filter((violation) =>
     ["serious", "critical"].includes(violation.impact ?? ""),
@@ -16,6 +33,14 @@ async function browserTaskDuration(
 ) {
   const result = await session.send("Performance.getMetrics");
   return result.metrics.find((metric) => metric.name === "TaskDuration")?.value ?? 0;
+}
+
+/** Parses a computed transition-duration ("0.01ms" | "1e-05s" | "0.00001s") into seconds. */
+function durationSeconds(value: string) {
+  const first = value.split(",")[0].trim();
+  const numeric = Number.parseFloat(first);
+  if (!Number.isFinite(numeric)) return Number.POSITIVE_INFINITY;
+  return first.endsWith("ms") ? numeric / 1000 : numeric;
 }
 
 async function readDownload(download: import("@playwright/test").Download) {
@@ -157,11 +182,18 @@ test("the wind tunnel re-sorts buyers, reconciles chart tables, and respects red
     )
     .not.toBe(beforeDots);
 
+  // Each engine serializes the collapsed duration differently ("0.01ms", "1e-05s",
+  // "0.00001s"), so compare the parsed seconds rather than the spelling.
   await page.emulateMedia({ reducedMotion: "reduce" });
-  await expect(page.locator('[data-testid="buyer-dot"]').first()).toHaveCSS(
-    "transition-duration",
-    /(?:0\.01ms|1e-05s)/,
-  );
+  await expect
+    .poll(() =>
+      page
+        .locator('[data-testid="buyer-dot"]')
+        .first()
+        .evaluate((dot) => getComputedStyle(dot).transitionDuration)
+        .then(durationSeconds),
+    )
+    .toBeLessThan(0.001);
   await expectNoSeriousAxeViolations(page);
 
   await page.getByRole("button", { name: "Switch to dark theme" }).click();
@@ -171,7 +203,12 @@ test("the wind tunnel re-sorts buyers, reconciles chart tables, and respects red
 
 test("each warmed template simulation renders within the 16ms P6a interaction budget", async ({
   page,
+  browserName,
 }) => {
+  // The P6a budget is measured through the Chrome DevTools Protocol, which Playwright
+  // exposes for Chromium only. The budget is an engine-specific performance gate, not a
+  // cross-browser behavioral contract, so it is asserted on Chromium and declared here.
+  test.skip(browserName !== "chromium", "Task-duration metrics require CDP (Chromium only)");
   const session = await page.context().newCDPSession(page);
   await session.send("Performance.enable");
 
@@ -203,7 +240,9 @@ test("each warmed template simulation renders within the 16ms P6a interaction bu
 
 test("uncertainty draws are seeded, paired, and rendered within the P7a budget", async ({
   page,
+  browserName,
 }) => {
+  test.skip(browserName !== "chromium", "Task-duration metrics require CDP (Chromium only)");
   const session = await page.context().newCDPSession(page);
   await session.send("Performance.enable");
 
