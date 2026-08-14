@@ -2,7 +2,7 @@
 
 **A wind tunnel for SaaS pricing & packaging decisions.** Model your buyers as explicit assumptions, design tiers and fences as a screening mechanism, and watch segments self-select — revealing revenue, conversion, and the surplus you're leaving on the table, before you ship a price.
 
-> **Status: P7d-2 is locally complete — the Conjoint + MaxDiff research surfaces ship with a synthetic CBC study whose eight generating coefficients the estimator recovers within 3·SE, and the pooled WTP bridge is verified end-to-end onto explicitly selected value-matrix cells (latest committed version v0.14.4). The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math, economics, Van Westendorp PSM, bundling regimes, Conjoint MNL estimation with derivative-gated Newton-Raphson, MaxDiff-lite scoring, and the Pricing Decision Record have tested pure-engine contracts; scenarios persist locally and share safely, and the Model, Design, Simulate, Uncertainty, Research (PSM + Bundling + Conjoint + MaxDiff), and Share workbenches make assumptions, evidence, decisions, mechanism envelopes, design comparisons, bundling verdicts, and pricing-page previews inspectable.**
+> **Status: P9-partial hardening under way — focus-visible outlines now cover every interactive control, the PLG template's willingness-to-pay bands are corrected to account level, and MODEL-SPEC coverage is gated across every shipped module including Conjoint/MaxDiff (latest committed version v0.15.0). The static shell and local checks are ready; remote CI and deployment remain pending. Buyer-distribution math, economics, Van Westendorp PSM, bundling regimes, Conjoint MNL estimation with derivative-gated Newton-Raphson, MaxDiff-lite scoring, and the Pricing Decision Record have tested pure-engine contracts; scenarios persist locally and share safely, and the Model, Design, Simulate, Uncertainty, Research (PSM + Bundling + Conjoint + MaxDiff), and Share workbenches make assumptions, evidence, decisions, mechanism envelopes, design comparisons, bundling verdicts, and pricing-page previews inspectable.**
 
 ## The idea
 
@@ -88,5 +88,5 @@ that version in `package.json` and both root version fields in
 `package-lock.json` in the same commit. Historical v0.8.11–v0.9.7 timestamps
 were owner-directed exceptions; do not rewrite pushed history.
 
-- **Base Format Version:** 0.14.4
-- **Portfolio Version:** v0.14.4_2026-07-25_05:15:00 (IST)
+- **Base Format Version:** 0.15.0
+- **Portfolio Version:** v0.15.0_2026-07-25_05:30:00 (IST)
