@@ -34,7 +34,7 @@ Next.js (App Router, static export) · React · TypeScript (strict) · Tailwind 
 
 | Phase   | Delivers                                                                 | Status                                                                           |
 | ------- | ------------------------------------------------------------------------ | -------------------------------------------------------------------------------- |
-| P0      | Scaffold, CI, deployed shell                                             | —                                                                                |
+| P0      | Scaffold, CI, deployed shell                                             | Locally complete; remote CI + deploy pending owner                               |
 | P1–P2   | Economics engine (selection, KPIs, surplus, sweeps) + math spec          | P2 locally complete                                                              |
 | P3      | Scenarios: persistence, import/export, share-by-URL, templates           | P3 locally complete                                                              |
 | P4      | Model surface: segments, bands, value matrix, templates                  | P4 locally complete                                                              |
@@ -88,5 +88,5 @@ that version in `package.json` and both root version fields in
 `package-lock.json` in the same commit. Historical v0.8.11–v0.9.7 timestamps
 were owner-directed exceptions; do not rewrite pushed history.
 
-- **Base Format Version:** 0.17.3
-- **Portfolio Version:** v0.17.3_2026-07-27_01:00:00 (IST)
+- **Base Format Version:** 0.17.4
+- **Portfolio Version:** v0.17.4_2026-07-27_01:15:00 (IST)

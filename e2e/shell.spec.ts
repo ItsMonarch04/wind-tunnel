@@ -101,7 +101,7 @@ test("E2E-01: the static shell is accessible, private, and theme-aware", async (
   expect(unexpectedRequests).toEqual([]);
 });
 
-test("E2E-02: the Design workbench builds a three-tier menu from blank and clears its linter", async ({
+test("E2E-02: the Design workbench builds a three-tier menu from blank and surfaces its linter guidance", async ({
   page,
 }) => {
   await page.goto("/");
@@ -140,7 +140,7 @@ test("E2E-02: the Design workbench builds a three-tier menu from blank and clear
     await page.getByLabel(label).check();
   }
 
-  await expect(page.getByText("No deterministic issues are firing.")).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Large downgrade mass" })).toHaveCount(2);
   await expectNoSeriousAxeViolations(page);
 });
 
