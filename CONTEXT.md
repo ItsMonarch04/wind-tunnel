@@ -1,8 +1,20 @@
 # CONTEXT.md — Working Handoff
 
+## PF-A1 handoff — 2026-08-18 (`v0.18.0` Public-Facing Audit /G4)
+
+**Commit:** `Commit v0.18.0: PF-A1 /G4` at 16:12 IST (post-dated: prior HEAD date +1 day, time +30 min).
+
+**What changed:** Public-facing audit PF-A1: README status bumped to v0.18.0, agent README block removed, OSS package metadata, CONTEXT/README version sync.
+
+**Version state:** `v0.18.0` agrees across `package.json`, lockfile root (where present), README status/release markers, and this file. Prior handoff was `v0.17.5`.
+
+**Working tree intent:** public-readiness hygiene only; no product-math / feature changes in this commit.
+
+---
+
 **Project:** wind-tunnel — a SaaS pricing & packaging studio (product name **Wind Tunnel**; see §11)
 **Doc role:** §0 is the concise handoff and current source of truth. The remaining sections preserve the detailed product contract, math specification, phased plan, owner decisions, and historical log. The public-facing story lives in README.md.
-**Last committed version:** v0.17.5 · **Current status:** the §6 build plan is code-complete and the pre-release audit series is committed (P0 through P9-partial and every v1.1 extension including P7e). v1.0 release remains gated only by owner-driven items: P0 remote CI + Vercel deployment, and P9's manual accessibility matrix, owner user-test, and README screenshots. §14 now collates these owner actions in one place. · **Last verified:** 2026-08-17 (S35; timestamps are owner-directed)
+**Last committed version:** v0.18.0 · **Current status:** the §6 build plan is code-complete and the pre-release audit series is committed (P0 through P9-partial and every v1.1 extension including P7e). v1.0 release remains gated only by owner-driven items: P0 remote CI + Vercel deployment, and P9's manual accessibility matrix, owner user-test, and README screenshots. §14 now collates these owner actions in one place. · **Last verified:** 2026-08-17 (S35; timestamps are owner-directed)
 
 ---
 
@@ -12,7 +24,7 @@
 
 | Fact | Verified state |
 |---|---|
-| Version | Latest committed release: **v0.17.5** — `Commit v0.17.5: External Action Sync /O7`, post-dated 2026-08-17 15:42 +05:30 (state-sync only; adds §14 Owner review list and version bumps, no functional change). The completed audit series is `v0.17.0` Shell Recovery + Model Conventions (`/1-F5-T6`, 00:15), `v0.17.1` Research Import Safety + Limits (`/2-F5-T6`, 00:30), `v0.17.2` Linter + Positioning Integrity (`/3-F5-T6`, 00:45), `v0.17.3` Share + Decision Record Clarity (`/4-F5-T6`, 01:00), and `v0.17.4` Spec Coverage + Release Handoff (`/5-F5-T6`, 01:15). `package.json`, both lockfile root versions, the footer, and README's Version Control block agree at v0.17.5. |
+| Version | Latest committed release: **v0.18.0** — `Commit v0.18.0: PF-A1 /G4` (supersedes prior note which referenced `Commit v0.17.5: External Action Sync /O7`, post-dated 2026-08-17 15:42 +05:30 (state-sync only; adds §14 Owner review list and version bumps, no functional change). The completed audit series is `v0.17.0` Shell Recovery + Model Conventions (`/1-F5-T6`, 00:15), `v0.17.1` Research Import Safety + Limits (`/2-F5-T6`, 00:30), `v0.17.2` Linter + Positioning Integrity (`/3-F5-T6`, 00:45), `v0.17.3` Share + Decision Record Clarity (`/4-F5-T6`, 01:00), and `v0.17.4` Spec Coverage + Release Handoff (`/5-F5-T6`, 01:15). `package.json`, both lockfile root versions, the footer, and README's Version Control block agree at v0.17.5. |
 | Git | `main` tracks `origin/main`. No tags, other branches, or submodules. |
 | Working tree | Clean after the v0.17.0–v0.17.4 audit series. Every §6 phase and all audited fixes are committed. |
 | Product | Every workbench is live: Model, Design, Simulate (KPIs, dots, waterfall, sweeps, mechanism view, A/B compare), Analyze — Uncertainty (Monte Carlo, tornado), Analyze — Research (PSM, Bundling, Conjoint, MaxDiff with pooled bridge), Analyze — Positioning (competitor entry, segment-scoped Pareto map, break-even rays, direct-dominance verdicts, per-segment competitor share, live competitor-loss KPI), and Share (Decision Record, Pricing-page mock, Scenario transfer). Exact own/competitor identity ties are competitor-first. |

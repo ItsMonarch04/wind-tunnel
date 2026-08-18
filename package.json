@@ -1,8 +1,8 @@
 {
   "name": "wind-tunnel",
-  "version": "0.17.5",
+  "version": "0.18.0",
   "private": true,
-  "description": "A client-side SaaS pricing and packaging decision studio.",
+  "description": "Client-side SaaS pricing and packaging decision studio.",
   "scripts": {
     "dev": "next dev",
     "build": "npm run privacy && next build && npm run bundle-size",
@@ -52,5 +52,15 @@
   "engines": {
     "node": "24.18.0",
     "npm": ">=10.0.0"
-  }
+  },
+  "license": "MIT",
+  "author": "Sidakpreet Singh",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ItsMonarch04/wind-tunnel.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ItsMonarch04/wind-tunnel/issues"
+  },
+  "homepage": "https://github.com/ItsMonarch04/wind-tunnel#"
 }
