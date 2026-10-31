@@ -99,6 +99,22 @@ function assertUnique(values: readonly string[], label: string) {
   }
 }
 
+/** @internal — exported for the HB Conjoint sampler in `hb-conjoint.ts`. */
+export function conjointLayoutFor(study: ConjointStudy): ParameterLayout {
+  return layoutFor(study);
+}
+
+/** @internal — exported for the HB Conjoint sampler in `hb-conjoint.ts`. */
+export function conjointDesignVector(
+  study: ConjointStudy,
+  layout: ParameterLayout,
+  alternative: ConjointAlternative,
+): readonly number[] {
+  return vectorFor(study, layout, alternative);
+}
+
+export type ConjointParameterLayout = ParameterLayout;
+
 function layoutFor(study: ConjointStudy): ParameterLayout {
   if (study.attributes.length < 1 || study.attributes.length > 5) {
     throw new RangeError("Conjoint needs 1–5 non-price attributes.");
